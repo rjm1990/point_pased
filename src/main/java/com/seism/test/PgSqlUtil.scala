@@ -1,11 +1,11 @@
-package com.seism.util
+package com.seism.test
 
 import com.sun.corba.se.impl.activation.ServerMain.logError
 import org.apache.spark.SparkContext
-import org.apache.spark.sql.{DataFrame, Row}
-import org.apache.spark.sql.jdbc.{JdbcDialect, JdbcDialects, JdbcType}
-import org.apache.spark.sql.types.{BinaryType, BooleanType, ByteType, DataType, DateType, DecimalType, DoubleType, FloatType, IntegerType, LongType, ShortType, StringType, StructType, TimestampType}
 import org.apache.spark.sql.execution.datasources.jdbc2.JdbcUtils.getCommonJDBCType
+import org.apache.spark.sql.jdbc.{JdbcDialect, JdbcDialects, JdbcType}
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.{DataFrame, Row}
 import org.postgresql.jdbc2.optional.ConnectionPool
 
 import java.sql.{Connection, PreparedStatement}

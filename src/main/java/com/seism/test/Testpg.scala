@@ -1,9 +1,9 @@
 
 
-package com.seism.util
+package com.seism.test
 
-import com.seism.util.PgSqlUtil.insertOrUpdateToPgsql
-import org.apache.spark.sql.{SparkSession}
+import com.seism.test.PgSqlUtil.insertOrUpdateToPgsql
+import org.apache.spark.sql.SparkSession
 
 
 object Testpg {
@@ -11,14 +11,22 @@ object Testpg {
   /**
   * 测试用例
   * 批量保存数据
-  , 存在则更新 不存在 则插入
+   * , 存在则更新 不存在 则插入
   * INSERT INTO test_001 VALUES(?, ?, ?)
   * ON conflict(ID) DO
   * UPDATE SET id =?
-  , NAME = ?
-  , age = ?;
-  *
-  @author linzhy
+   * , NAME = ?
+   * , age = ?;
+   *
+  * test
+   * id	varchar	20	0	False	True			pg_catalog	default	0				0		0	0	0	0	False	0	False	0	0		False
+   * name	varchar	32	0	True	False			pg_catalog	default	0				0		0	0	0	0	False	0	False	0	0		False
+   *
+   * test001
+   * id	varchar	32	0	False	True			pg_catalog	default	0				0		0	0	0	0	False	0	False	0	0		False
+   * name	varchar	255	0	True	False			pg_catalog	default	0				0		0	0	0	0	False	0	False	0	0		False
+   *
+   * @author linzhy
   */
 
 

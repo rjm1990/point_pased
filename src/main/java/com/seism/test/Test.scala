@@ -1,8 +1,8 @@
-package com.seism.util
+package com.seism.test
 
 import org.apache.spark.sql.execution.datasources.jdbc2.JDBCSaveMode
-import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.types.{LongType, StringType, StructField, StructType}
+import org.apache.spark.sql.{Row, SparkSession}
 
 /**
  * https://blog.csdn.net/weixin_42186387/article/details/112937594
