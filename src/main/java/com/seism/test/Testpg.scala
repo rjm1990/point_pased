@@ -3,6 +3,9 @@
 package com.seism.test
 
 import com.seism.test.PgSqlUtil.insertOrUpdateToPgsql
+import com.typesafe.config.{Config, ConfigFactory}
+import org.apache.commons.configuration.{Configuration, ConfigurationFactory}
+import org.apache.spark.internal.config
 import org.apache.spark.sql.SparkSession
 
 
@@ -38,19 +41,20 @@ object Testpg {
         .config("spark.debug.maxToStringFields", "100")
         .config("spark.serializer","org.apache.spark.serializer.KryoSerializer")
         .getOrCreate()
-//      var config = ConfigFactory.load()
 
-      val ods_url = "jdbc:postgresql://10.13.155.192:5432/fxfzaqbz"
+      val config: Config = ConfigFactory.load()
+      val pghost: String = config.getString("pghost")
+      val pgport: String = config.getString("pgport")
+      val pguser: String = config.getString("pguser")
+      val pgpassword: String = config.getString("pgpassword")
 
-      val ods_user = "postgres"
-
-      val ods_password = "123456"
+      val ods_url = s"jdbc:postgresql://$pghost:$pgport/fxfzaqbz"
 
       val test_001 = spark.read.format("jdbc")
         .option("url", ods_url)
         .option("dbtable", "test001")
-        .option("user", ods_user)
-        .option("password", ods_password)
+        .option("user", pguser)
+        .option("password", pgpassword)
         .load()
 
       test_001.createOrReplaceTempView("test_001")

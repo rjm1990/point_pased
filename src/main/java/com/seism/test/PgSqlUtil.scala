@@ -1,6 +1,7 @@
 package com.seism.test
 
 import com.sun.corba.se.impl.activation.ServerMain.logError
+import com.typesafe.config.{Config, ConfigFactory}
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.execution.datasources.jdbc2.JdbcUtils.getCommonJDBCType
 import org.apache.spark.sql.jdbc.{JdbcDialect, JdbcDialects, JdbcType}
@@ -12,12 +13,18 @@ import java.sql.{Connection, PreparedStatement}
 object PgSqlUtil {
 
   def connectionPool() = {
+    val config: Config = ConfigFactory.load()
+    val pghost: String = config.getString("pghost")
+    val pgport: Int = config.getInt("pgport")
+    val pguser: String = config.getString("pguser")
+    val pgpassword: String = config.getString("pgpassword")
+
     val conn = new ConnectionPool()
-    conn.setUser("postgres")
-    conn.setPassword("123456")
-    conn.setServerName("10.13.155.192")
+    conn.setUser(pguser)
+    conn.setPassword(pgpassword)
+    conn.setServerName(pghost)
     conn.setDatabaseName("fxfzaqbz")
-    conn.setPortNumber(5432)
+    conn.setPortNumber(pgport)
     conn.getConnection
   }
   /**
@@ -41,7 +48,9 @@ object PgSqlUtil {
     val realsql = sql.concat(update)
     val conn = connectionPool()
     conn.setAutoCommit(false)
+
     val dialect = JdbcDialects.get(conn.getMetaData.getURL)
+
     val broad_ps = sc.broadcast(conn.prepareStatement(realsql))
 
     val numFields = tableSchema.fields.length * 2
